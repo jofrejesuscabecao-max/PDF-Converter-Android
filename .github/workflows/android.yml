@@ -1,4 +1,4 @@
-name: Gerar APK Profissional
+name: Gerar APK (Estável)
 
 on: [push, workflow_dispatch]
 
@@ -16,8 +16,14 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    # Como não temos o wrapper (gradlew), usamos o Gradle instalado no servidor
-    - name: Compilar APK (Modo Forçado)
+    # AQUI ESTÁ A CORREÇÃO:
+    # Forçamos o Gradle 8.2 que é 100% compatível com o Android
+    - name: Configurar Gradle 8.2
+      uses: gradle/actions/setup-gradle@v3
+      with:
+        gradle-version: '8.2'
+
+    - name: Compilar APK
       run: gradle assembleDebug --no-daemon
 
     - name: Upload do APK Pronto
@@ -25,5 +31,3 @@ jobs:
       with:
         name: App-PDF-Converter
         path: app/build/outputs/apk/debug/app-debug.apk
-
-
