@@ -1,3 +1,4 @@
+// ARQUIVO: build.gradle (Raiz)
 buildscript {
     repositories {
         google()
@@ -8,11 +9,12 @@ buildscript {
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0'
     }
 }
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
+
+// REMOVIDO: allprojects { ... } 
+// Motivo: Já está configurado no settings.gradle e causava conflito.
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }
 
 
